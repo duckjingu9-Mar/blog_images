@@ -19,6 +19,8 @@
     '기타 앱': 'Other Apps',
     '링크 복사': 'Copy link',
     '링크 가져오기': 'Get link',
+    '공유 링크 만들기': 'Get link',
+    '테마 이미지 제공:': 'Theme images by',
     '이메일': 'Email',
     '더보기…': 'More…',
     '더보기': 'More',
@@ -39,8 +41,17 @@
     '댓글 없음': 'No comments',
     '댓글을 입력하세요.': 'Enter your comment...',
     '게시물 더보기': 'More posts',
-    '닫기': 'Close'
+    '닫기': 'Close',
+    '기타 앱과 공유': 'Share to other apps',
+    '이미지': 'Image',
+    '내 사진': 'My photo',
+    '이름': 'Name',
+    '메시지': 'Message',
+    '보내기': 'Send'
   };
+  // 문의 양식이 띄우는 성공/오류 문구(정확한 한국어 원문을 몰라 내용과 상관없이 영어 문구로 바꿈)
+  var CF_SUCCESS = 'Thanks! Your message has been sent.';
+  var CF_ERROR = 'Please enter a valid email address and a message, then try again.';
   var MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
   function tr(s) {
@@ -49,8 +60,12 @@
     if (MAP[t]) return s.replace(t, MAP[t]);
     var m = t.match(/^(\d{1,2})월$/);                       // 보관함의 "11월"
     if (m) return s.replace(t, MONTHS[+m[1] - 1]);
+    m = t.match(/^(\d{1,2})월 (\d{4})$/);                   // 보관함의 "11월 2026"
+    if (m) return s.replace(t, MONTHS[+m[1] - 1] + ' ' + m[2]);
     m = t.match(/^(\d{1,2})월 (\d{1,2}), (\d{4})$/);         // "11월 22, 2026"
     if (m) return s.replace(t, MONTHS[+m[1] - 1] + ' ' + (+m[2]) + ', ' + m[3]);
+    m = t.match(/^(.+)에 공유$/);                            // "Facebook에 공유"
+    if (m) return s.replace(t, 'Share to ' + m[1]);
     m = t.match(/^댓글 (\d+)개$/);
     if (m) return s.replace(t, m[1] + (m[1] === '1' ? ' comment' : ' comments'));
     return null;
@@ -68,11 +83,14 @@
     var w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false), n, out;
     while ((n = w.nextNode())) {
       if (!/[가-힣]/.test(n.nodeValue)) continue;
+      var p = n.parentElement;
+      if (p && p.closest('.contact-form-success-message')) { n.nodeValue = CF_SUCCESS; continue; }
+      if (p && p.closest('.contact-form-error-message')) { n.nodeValue = CF_ERROR; continue; }
       out = tr(n.nodeValue);
       if (out !== null) n.nodeValue = out;
     }
-    var attrs = ['aria-label', 'title', 'placeholder', 'alt'];
-    var els = root.querySelectorAll('[aria-label],[title],[placeholder],[alt]');
+    var attrs = ['aria-label', 'title', 'placeholder', 'alt', 'value'];
+    var els = root.querySelectorAll('[aria-label],[title],[placeholder],[alt],input[type=button][value],input[type=submit][value]');
     for (var i = 0; i < els.length; i++) {
       for (var j = 0; j < attrs.length; j++) {
         var v = els[i].getAttribute(attrs[j]);
@@ -81,8 +99,40 @@
     }
   }
 
+  // Contempo는 사이드바를 숨기므로, 사이드바의 문의 양식 가젯(ContactForm1)을
+  // Contact 페이지 본문의 <div id="contact-form-here"> 자리로 옮긴다. 다른 화면에서는 숨긴다.
+  function placeContactForm() {
+    var cf = document.getElementById('ContactForm1');
+    var slot = document.getElementById('contact-form-here');
+    if (!cf) return;
+    if (slot && !slot.contains(cf)) {
+      slot.appendChild(cf);
+      cf.style.display = 'block';
+      var h = cf.querySelector('h3.title');
+      if (h) h.style.display = 'none';
+    } else if (!slot) {
+      cf.style.display = 'none';
+    }
+  }
+
+  function addFormStyle() {
+    var css = '#contact-form-here{margin:24px 0;padding:24px;border:1px solid #E5E7EB;border-radius:12px;background:#F9FAFB;max-width:560px}' +
+      '#contact-form-here .contact-form-widget{max-width:none}' +
+      '#contact-form-here form{font-size:16px;color:#1F2937}' +
+      '#contact-form-here input[type=text],#contact-form-here textarea{display:block;width:100%;max-width:none;box-sizing:border-box;margin:6px 0 4px;padding:10px 12px;border:1px solid #CBD5E1;border-radius:8px;font:inherit;background:#fff}' +
+      '#contact-form-here textarea{min-height:140px}' +
+      '#contact-form-here .contact-form-button-submit{margin-top:8px;padding:10px 24px;height:auto;border:0;border-radius:8px;background:#0F766E;color:#fff;font:inherit;font-weight:600;cursor:pointer}' +
+      '#contact-form-here .contact-form-button-submit:hover{background:#115E59}' +
+      '#contact-form-here form>div{max-width:none!important;text-align:left!important}';
+    var s = document.createElement('style');
+    s.textContent = css;
+    document.head.appendChild(s);
+  }
+
   function run() {
     document.documentElement.setAttribute('lang', 'en-US');
+    addFormStyle();
+    placeContactForm();
     fixDates(document);
     walk(document.body);
   }
