@@ -1,0 +1,39 @@
+/* Signal and Silicon custom styles (source: design/custom.css) */
+body { background: #F5F7FA !important; color: #1F2937; }
+.bg-photo-overlay, .bg-photo-container, .bg-photo { display: none !important; }
+.image-attribution { display: none !important; }
+.centered-top-container, .centered-top-container.sticky { background: #FFFFFF !important; box-shadow: 0 1px 0 #E5E7EB; }
+.centered-top-container .search, .centered-top-container svg { fill: #0B1F4D !important; color: #0B1F4D !important; }
+.header-widget img { max-height: 64px; width: auto; }
+.centered-top-container h1, .centered-top-container .blog-name, .centered-top-container .title { color: #0B1F4D !important; }
+.post-outer-container { border-radius: 12px; box-shadow: 0 1px 3px rgba(11,31,77,.08) !important; }
+.post-title, .post-title a { color: #0B1F4D !important; font-weight: 700; letter-spacing: -0.01em; }
+.item-view .post-title { font-size: 2.1em; line-height: 1.25; }
+.post-body { color: #1F2937 !important; font-size: 18px !important; line-height: 1.75 !important; }
+.post-body p, .post-body li { color: #1F2937; }
+.post-body h2 { color: #0B1F4D !important; font-size: 1.55em !important; font-weight: 700; margin: 1.8em 0 0.6em; padding-top: 0.4em; border-top: 1px solid #E5E7EB; scroll-margin-top: 80px; }
+.post-body h3 { color: #0B1F4D !important; font-size: 1.2em !important; font-weight: 700; margin: 1.4em 0 0.4em; }
+.post-body a { color: #0F766E !important; text-decoration: underline; text-decoration-color: rgba(15,118,110,.35); text-underline-offset: 3px; }
+.post-body a:hover { text-decoration-color: #0F766E; }
+.post-body strong { color: #0B1F4D; }
+.post-body code { background: #EEF2F7; border-radius: 4px; padding: 0.1em 0.35em; font-size: 0.9em; }
+.post-body blockquote { font-size: 17px !important; line-height: 1.65 !important; font-style: normal !important; color: #1F2937 !important; background: #F0FDFA; border-left: 4px solid #14B8A6; border-radius: 8px; padding: 1em 1.25em !important; margin: 1.5em 0 !important; }
+.post-body blockquote strong:first-child { display: block; color: #0B1F4D; font-size: 0.85em; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.3em; }
+.post-body blockquote, .post-body blockquote * { text-align: left !important; }
+.post-body blockquote ul { margin: 0.3em 0 0; padding-left: 1.2em; }
+.post-body blockquote + p { margin-bottom: 0.3em; color: #0B1F4D; }
+.post-body blockquote + p + ul { background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 8px; padding: 0.7em 1.2em 0.7em 2.2em; margin-top: 0; }
+.post-body blockquote + p + ul li { margin: 0.2em 0; }
+.post-body blockquote + p + ul a { text-decoration: none; }
+.post-body table { width: 100%; border-collapse: collapse; font-size: 15.5px; margin: 1.5em 0; }
+@media (max-width: 640px) { .post-body table { display: block; overflow-x: auto; } }
+.post-body th { background: #0B1F4D; color: #FFFFFF !important; text-align: left; font-weight: 600; padding: 10px 12px; }
+.post-body td { border-bottom: 1px solid #E5E7EB; padding: 10px 12px; color: #1F2937; vertical-align: top; }
+.post-body tbody tr:nth-child(even) td { background: #F8FAFC; }
+.post-body figure img { border: 1px solid #E5E7EB; }
+.post-body figcaption { color: #4B5563 !important; font-size: 14.5px !important; line-height: 1.5; }
+.sidebar-container .widget h3, .sidebar-container .widget .title { color: #0B1F4D !important; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; font-size: 13px !important; }
+.sidebar-container a { color: #0F766E !important; }
+.footer a, .blog-pager a { color: #0F766E !important; }
+.post-header .byline, .post-footer .byline { color: #6B7280 !important; }
+.post-labels a, .label-size a { color: #0F766E !important; }
